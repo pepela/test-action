@@ -18,7 +18,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: create pull request
+      - name: Create Pull Request
+        id: create-pr
         run: gh pr create -B master -H development --title '${{ github.event.inputs.pr_title }}' --body '${{ github.event.inputs.pr_body }}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
