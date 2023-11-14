@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: create pull request
-        run: gh pr create -B master -H development --title ${{ github.event.inputs.pr_title }} --body ${{ github.event.inputs.pr_body }}
+        run: gh pr create -B master -H development --title '${{ github.event.inputs.pr_title }}' --body '${{ github.event.inputs.pr_body }}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
