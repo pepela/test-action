@@ -35,7 +35,7 @@ jobs:
 
     steps:
       - name: Debug
-        run: echo "Executing gh pr view ${{ needs.create-pr.outputs.pr_number }} --repo pepela/test-action --json reviews"
+        run: echo "wadap ${{ needs.create-pr.outputs.result }} => ${{ needs.create-pr.outputs.result == 'success' }}"
 
       - name: Wait for pull request approval
         run: |
