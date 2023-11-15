@@ -75,7 +75,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            prNumber = ${{ needs.create-pr.outputs.pr_number }};
+            prNumber = 35;
             await github.pulls.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
