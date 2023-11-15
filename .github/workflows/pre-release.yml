@@ -32,12 +32,16 @@ jobs:
   wait-for-approval:
     needs: create-pr
     runs-on: ubuntu-latest
+    
+    outputs:
+      result: ${{ steps.wait_approval.outputs.result }}
 
     steps:
       - name: Debug
         run: echo "wadap ${{ needs.create-pr.outputs.result }} => ${{ needs.create-pr.outputs.result == 'success' }}"
 
       - name: Wait for pull request approval
+        id: wait_approval
         run: |
           wait_for_approval() {
             sleep_interval=60
@@ -46,6 +50,7 @@ jobs:
               approved_reviews=$(echo "$pr_info" | jq '.reviews[] | select(.state == "APPROVED")')
               if [ -n "$approved_reviews" ]; then
                 echo "Pull request approved!"
+                echo "result=success" >> $GITHUB_OUTPUT
                 exit 0
               fi
               sleep $sleep_interval
@@ -57,7 +62,7 @@ jobs:
           
   merge-pr:
     needs: create-pr
-    if: ${{ needs.create-pr.outputs.result == 'success' }}
+    if: ${{ needs.wait-for-approval.outputs.result == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
