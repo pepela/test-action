@@ -76,7 +76,7 @@ jobs:
         run: echo `pr numbero ${{ needs.wait-for-approval.outputs.pr_number }}`
 
       - name: Merge Pull Request
-        run: gh pr merge ${{ needs.wait-for-approval.outputs.pr_number }} --repo pepela/test-action
+        run: gh pr merge ${{ needs.wait-for-approval.outputs.pr_number }} --repo pepela/test-action --merge
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
