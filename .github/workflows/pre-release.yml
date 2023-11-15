@@ -39,6 +39,7 @@ jobs:
             sleep_interval=60
             while true; do
               approvals=$(gh pr list $pr_number --json state --jq '.[] | select(.state == "APPROVED")')
+              echo 'approvals $approvals'
               if [ -n "$approvals" ]; then
                 echo "Pull request approved!"
                 exit 0
