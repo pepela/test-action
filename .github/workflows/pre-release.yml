@@ -37,7 +37,7 @@ jobs:
 
     steps:
       - name: Debug
-        run: echo "Executing gh pr view ${{ jobs.create-pr.steps.create-pr.outputs.pr_number }} --repo pepela/test-action --json reviews"
+        run: echo "Executing gh pr view ${{ needs.create-pr.outputs.pr_number }} --repo pepela/test-action --json reviews"
 
       - name: Wait for pull request approval
         run: |
