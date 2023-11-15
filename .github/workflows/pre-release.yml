@@ -22,10 +22,9 @@ jobs:
         id: create-pr
         run: |
           gh pr create -B master -H development --title '${{ github.event.inputs.pr_title }}' --body '${{ github.event.inputs.pr_body }}'
-          echo $pr_output
+          echo echo "traki=$pr_output" >> $GITHUB_OUTPUT
           pr_number=$(echo "$pr_output" | awk '/Created pull request/ {print $4}')
           echo "pr_number=$pr_number" >> $GITHUB_OUTPUT
-          echo "traki=ki" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
