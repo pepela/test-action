@@ -67,11 +67,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: debug
-        run: echo 'still have it? = ${{ needs.create-pr.outputs.pr_number }}'
-
       - name: Merge Pull Request
         run: gh pr merge ${{ needs.create-pr.outputs.pr_number }} --repo pepela/test-action
         env:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
