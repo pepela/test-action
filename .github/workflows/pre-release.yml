@@ -57,14 +57,6 @@ jobs:
           wait_for_approval
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  deb-job:
-    needs: wait-for-approval
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: debug
-        run: echo "lol ${{ needs.wait-for-approval.outputs.result == 'success' }}"
           
   merge-pr:
     needs: wait-for-approval
@@ -80,9 +72,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const prNumber = ${{ needs.create-pr.outputs.pr_number }};
             await github.pulls.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: prNumber
+              pull_number: ${{ needs.create-pr.outputs.pr_number }}
             });
