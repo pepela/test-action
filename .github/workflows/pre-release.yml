@@ -67,13 +67,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: debug
+        run: echo 'still have it? = ${{ needs.create-pr.outputs.pr_number }}'
+
       - name: Merge Pull Request
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            prNumber = ${{ needs.create-pr.outputs.pr_number }};
             await github.pulls.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: ${{ needs.create-pr.outputs.pr_number }}
+              pull_number: prNumber
             });
