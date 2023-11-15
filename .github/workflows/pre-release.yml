@@ -34,14 +34,12 @@ jobs:
     steps:
       - name: Wait for pull request approval
         run: |
-          echo $pr_number
-          pr_number=$pr_number
           wait_for_approval() {
             sleep_interval=60
             while true; do
-              approvals=$(gh pr list $pr_number --json state --jq '.[] | select(.state == "APPROVED")')
-              echo 'approvals $approvals'
-              if [ -n "$approvals" ]; then
+              pr_info=$(gh pr view $pr_number --repo pepela/test-action --json reviews)
+              approved_reviews=$(echo "$pr_info" | jq '.reviews[] | select(.state == "APPROVED")')
+              if [ -n "$approved_reviews" ]; then
                 echo "Pull request approved!"
                 exit 0
               fi
