@@ -37,9 +37,6 @@ jobs:
       result: ${{ steps.wait_approval.outputs.result }}
 
     steps:
-      - name: Debug
-        run: echo "wadap ${{ needs.create-pr.outputs.result }} => ${{ needs.create-pr.outputs.result == 'success' }}"
-
       - name: Wait for pull request approval
         id: wait_approval
         run: |
@@ -61,7 +58,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
   merge-pr:
-    needs: create-pr
+    needs: wait-for-approval
     if: ${{ needs.wait-for-approval.outputs.result == 'success' }}
     runs-on: ubuntu-latest
 
