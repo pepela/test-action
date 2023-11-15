@@ -38,6 +38,9 @@ jobs:
       result: ${{ steps.wait_approval.outputs.result }}
 
     steps:
+      - name: debug
+        run: echo `pr numbero ${{ needs.create-pr.outputs.pr_number }}`
+        
       - name: Wait for pull request approval
         id: wait_approval
         run: |
