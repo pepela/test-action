@@ -49,6 +49,8 @@ jobs:
             done
           }
           wait_for_approval
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
   merge-pr:
     needs: create-pr
