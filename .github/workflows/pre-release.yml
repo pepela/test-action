@@ -33,10 +33,20 @@ jobs:
 
     steps:
       - name: Wait for pull request approval
-        uses: octokit/wait-for-approval@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request-number: ${{ needs.create-pr.outputs.pr_number }}
+        run: |
+          pr_number=${{ needs.create-pr.outputs.pr_number }}
+          wait_for_approval() {
+            sleep_interval=60  # adjust this interval as needed
+            while true; do
+              approvals=$(gh pr review-list $pr_number --json state --jq '.[] | select(.state == "APPROVED")')
+              if [ -n "$approvals" ]; then
+                echo "Pull request approved!"
+                exit 0
+              fi
+              sleep $sleep_interval
+            done
+          }
+          wait_for_approval
           
   merge-pr:
     needs: create-pr
