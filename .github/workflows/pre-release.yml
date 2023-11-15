@@ -32,6 +32,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Debug
+        run: echo "Executing gh pr view $pr_number --repo pepela/test-action --json reviews"
+
       - name: Wait for pull request approval
         run: |
           wait_for_approval() {
