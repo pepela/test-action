@@ -27,16 +27,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Debug output
-        run: echo '$pr_number'
-
   wait-for-approval:
     needs: create-pr
     runs-on: ubuntu-latest
 
     steps:
       - name: Debug
-        run: echo "Executing gh pr view $pr_number --repo pepela/test-action --json reviews"
+        run: echo "Executing gh pr view ${{ steps.create-pr.outputs.pr_number }} --repo pepela/test-action --json reviews"
 
       - name: Wait for pull request approval
         run: |
