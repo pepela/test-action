@@ -28,7 +28,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Debug output
-        run: echo '${{ pr_number }}'
+        run: echo '$pr_number'
 
   wait-for-approval:
     needs: create-pr
