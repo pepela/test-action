@@ -1,4 +1,4 @@
-name: Create Pull Request
+name: Pre Release
 
 on:
   workflow_dispatch:
@@ -36,9 +36,9 @@ jobs:
         run: |
           pr_number=${{ needs.create-pr.outputs.pr_number }}
           wait_for_approval() {
-            sleep_interval=60  # adjust this interval as needed
+            sleep_interval=60
             while true; do
-              approvals=$(gh pr review-list $pr_number --json state --jq '.[] | select(.state == "APPROVED")')
+              approvals=$(gh pr review $pr_number --json state --jq '.[] | select(.state == "APPROVED")')
               if [ -n "$approvals" ]; then
                 echo "Pull request approved!"
                 exit 0
