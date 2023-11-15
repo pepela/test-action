@@ -16,6 +16,7 @@ jobs:
 
     outputs:
       pr_number: ${{ steps.create-pr.outputs.pr_number }}
+      
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -56,6 +57,14 @@ jobs:
           wait_for_approval
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deb-job:
+    needs: wait-for-approval
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: debug
+        run: echo "lol ${{ needs.wait-for-approval.outputs.result == 'success' }}"
           
   merge-pr:
     needs: wait-for-approval
